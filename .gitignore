@@ -1,0 +1,8 @@
+# Ignore ChromaDB vector DB
+chroma_db/
+
+# Ignore Python cache
+__pycache__/
+
+# Ignore venv
+venv/
