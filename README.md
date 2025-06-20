@@ -1,4 +1,4 @@
-#  Financial News & Report Analyzer (RAG + LangChain + Ollama + Mistral)
+#  Financial News & Report Analyzer (RAG + LangChain + Ollama + Sentence Transformers + Mistral)
 
 This project has **two powerful functionalities** built using **RAG (Retrieval-Augmented Generation)**, **LangChain**, **Ollama**, and **Mistral AI**, with embeddings managed through **ChromaDB** and **Sentence Transformers**.
 
