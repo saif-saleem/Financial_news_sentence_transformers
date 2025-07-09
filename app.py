@@ -2,8 +2,8 @@ import streamlit as st
 from news_fetcher import fetch_news_links_yahoo
 from extractors import extract_text_from_url, extract_text_from_pdf
 from chunker import chunk_text
-from embedding_db import store_chunks, retrieve_similar_chunks, get_all_documents
-from rag_analyzer import analyze_article_rag, analyze_financial_report
+from embedding_db import store_chunks, retrieve_similar_chunks
+from rag_analyzer import analyze_article_rag, analyze_financial_report_with_context
 from utils import compute_cosine_similarity, compute_rouge_l
 import warnings
 
@@ -70,9 +70,9 @@ with tab1:
                     st.write(f"**Sentiment**: {final_result.get('sentiment')}")
                     st.write(f"**Bias**: {final_result.get('bias')}")
 
-# ---- TAB 2: Financial PDF Analysis ----
+# ---- TAB 2: Financial PDF Analysis with CFA Context ----
 with tab2:
-    st.write("Upload 5-Year Financial Report PDFs (Profit, Revenue, Debt Analysis + Investment Advice)")
+    st.write("Upload 5-Year Financial Report PDFs (Profit, Revenue, Debt Analysis + Investment Advice using CFA Knowledge)")
     uploaded_files = st.file_uploader("Upload PDF reports", type=["pdf"], accept_multiple_files=True)
 
     if st.button("Analyze Reports"):
@@ -91,10 +91,10 @@ with tab2:
 
             if combined_report_text.strip():
                 report_chunks = chunk_text(combined_report_text)
-                store_chunks(report_chunks)
+                store_chunks(report_chunks, namespace="reports")
 
-                result = analyze_financial_report(combined_report_text)
-                st.subheader("📈 Financial Report Analysis (5 Years)")
+                result = analyze_financial_report_with_context(combined_report_text)
+                st.subheader("📈 Financial Report Analysis (5 Years) using CFA Books")
                 st.write(f"**Profit Trend**: {result.get('profit')}")
                 st.write(f"**Revenue Trend**: {result.get('revenue')}")
                 st.write(f"**Debt Status**: {result.get('debt')}")
